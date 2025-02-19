@@ -5,9 +5,9 @@
 # Stéphane Donnet <donnet.stephane@gmail.com>
 
 pkgname="vstax"
-_year="2023"
-pkgver="${_year}_1.0.7"
-pkgrel="90"
+_year="2024"
+pkgver="${_year}_1.0.0"
+pkgrel="113"
 pkgdesc="Software to fill the tax forms of the canton of Valais, Switzerland"
 url="http://www.vs.ch/vstax"
 license=('unknown')
@@ -17,8 +17,8 @@ install="vstax.install"
 changelog="ChangeLog"
 source=("https://sftp.vs.ch/${pkgname}/${_year}/${pkgname}${pkgver}-${pkgrel}_amd64.deb"
         "archlinux.patch")
-sha256sums=('ed4a0452a7fb5fce948cfb92e3745e2a5fa972e7e229a4e2848770ac2560719f'
-            'a514c2d5495b3032ec0e16741624ec17073e1319a1dfb272193bd33ea9b40215')
+sha256sums=('bcd024715cd4180b8f578f114c544e1e988a3148aa2e9529a4889ccf62d4ef6c'
+            '24f5eaf62370836a75185c3e75b1402f4e9fea216dbc1541eeb6a57237eabcb1')
 
 
 prepare() {
