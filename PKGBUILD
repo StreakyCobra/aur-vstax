@@ -19,7 +19,7 @@ source=("https://sftp.vs.ch/${pkgname}/${_year}/${pkgname}${pkgver}-${pkgrel}_am
         "archlinux.patch" "vstax2024")
 sha256sums=('bcd024715cd4180b8f578f114c544e1e988a3148aa2e9529a4889ccf62d4ef6c'
             'e27b65e54bd0e8be3bcaf09bfee76eb167de0640abd2d77713d87b5bb01907bc'
-            'f7deaae6737392aa04cdbca386111857fc82a87dcbd293e3c2ef36af37488538')
+            '37ae2f14b4e7044c4264b0b8a1228562a9dea8c44c70a762747cc43ed43968ed')
 
 
 prepare() {
