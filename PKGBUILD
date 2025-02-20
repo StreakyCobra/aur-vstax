@@ -18,7 +18,8 @@ changelog="ChangeLog"
 source=("https://sftp.vs.ch/${pkgname}/${_year}/${pkgname}${pkgver}-${pkgrel}_amd64.deb"
         "archlinux.patch" "vstax2024")
 sha256sums=('bcd024715cd4180b8f578f114c544e1e988a3148aa2e9529a4889ccf62d4ef6c'
-            '24f5eaf62370836a75185c3e75b1402f4e9fea216dbc1541eeb6a57237eabcb1')
+            'e27b65e54bd0e8be3bcaf09bfee76eb167de0640abd2d77713d87b5bb01907bc'
+            '3cb3ae194045422e82a37079abc70da5a519a9c5c94de5d4d30e13280cbbefe2')
 
 
 prepare() {
