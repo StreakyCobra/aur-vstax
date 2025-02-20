@@ -5,13 +5,15 @@ get_java_version() {
     "$1" -version 2>&1 | awk -F '"' '/version/ {print $2}' | awk -F. '{print ($1 == "1") ? $2 : $1}'
 }
 
-# Find Java executable
+# Find Java executable with fallbacks
 if [ -n "$JAVA_HOME" ] && [ -x "$JAVA_HOME/bin/java" ]; then
     JAVA="$JAVA_HOME/bin/java"
 elif command -v java >/dev/null 2>&1; then
     JAVA=$(command -v java)
 elif [ -x "/usr/lib/jvm/java-21-openjdk/bin/java" ]; then
     JAVA="/usr/lib/jvm/java-21-openjdk/bin/java"
+elif [ -x "/usr/lib/jvm/java-17-openjdk/bin/java" ]; then
+    JAVA="/usr/lib/jvm/java-17-openjdk/bin/java"
 elif [ -x "/usr/lib/jvm/java-8-openjdk/bin/java" ]; then
     JAVA="/usr/lib/jvm/java-8-openjdk/bin/java"
 else
