@@ -1,4 +1,14 @@
 post_install() {
     update-mime-database usr/share/mime
     update-desktop-database -q
+
+    # Check if default browser is set
+    if ! xdg-settings get default-web-browser >/dev/null 2>&1; then
+        echo "Warning: No default browser is set. VSTax requires a default browser to be set."
+        echo "You can set it using: xdg-settings set default-web-browser <browser>.desktop"
+        echo "Common examples:"
+        echo "  xdg-settings set default-web-browser firefox.desktop"
+        echo "  xdg-settings set default-web-browser chromium.desktop"
+        echo "  xdg-settings set default-web-browser google-chrome.desktop"
+    fi
 }

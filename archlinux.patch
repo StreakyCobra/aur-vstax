@@ -17,13 +17,3 @@ Index: vstax/src/usr/share/applications/vstax2024.desktop
  MimeType=application/vstax2024;
  Name=VSTax 2024
  GenericName=VSTax 2024
-Index: vstax/src/usr/share/vstax2024/vstax2024.sh
-===================================================================
---- vstax.orig/src/usr/share/vstax2024/vstax2024.sh
-+++ vstax/src/usr/share/vstax2024/vstax2024.sh
-@@ -1,3 +1,3 @@
- #!/bin/sh
--cd /usr/share/vstax2024
--./jre/bin/java -Xmx800m -Xms800m -Djava.locale.providers=COMPAT,CLDR --add-exports=java.base/sun.net.www.protocol.file=ALL-UNNAMED --add-exports=java.desktop/sun.swing=ALL-UNNAMED --add-exports=java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED --add-exports=java.desktop/sun.awt.shell=ALL-UNNAMED --add-exports=java.xml/com.sun.org.apache.xerces.internal.jaxp.datatype=ALL-UNNAMED  -jar jfw-launcher-8.0.1-obf.jar "$1"
-+cd /usr/share/java/vstax2024
-+/usr/bin/java -Xmx800m -Xms800m -Djava.locale.providers=COMPAT,CLDR --add-exports=java.base/sun.net.www.protocol.file=ALL-UNNAMED --add-exports=java.desktop/sun.swing=ALL-UNNAMED --add-exports=java.desktop/com.sun.java.swing.plaf.windows=ALL-UNNAMED --add-exports=java.desktop/sun.awt.shell=ALL-UNNAMED --add-exports=java.xml/com.sun.org.apache.xerces.internal.jaxp.datatype=ALL-UNNAMED  -jar jfw-launcher-8.0.1-obf.jar "$1"

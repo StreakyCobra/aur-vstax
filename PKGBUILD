@@ -1,7 +1,7 @@
 # Maintainer: Fabien Dubosson <fabien.dubosson@gmail.com>
 
 # Contributors:
-# Pierre-Yves Savioz <savioz.py@net-c.com>
+# Pierre-Yves Savioz <savioz.py@protonmail.com>
 # Stéphane Donnet <donnet.stephane@gmail.com>
 
 pkgname="vstax"
@@ -12,13 +12,14 @@ pkgdesc="Software to fill the tax forms of the canton of Valais, Switzerland"
 url="http://www.vs.ch/vstax"
 license=('unknown')
 arch=('x86_64')
-depends=('java-runtime' 'shared-mime-info' 'desktop-file-utils' 'libxrender' 'libxtst' 'fontconfig')
+depends=('java-runtime' 'shared-mime-info' 'desktop-file-utils' 'libxrender' 'libxtst' 'fontconfig' 'xdg-utils' 'qt5-tools')
 install="vstax.install"
 changelog="ChangeLog"
 source=("https://sftp.vs.ch/${pkgname}/${_year}/${pkgname}${pkgver}-${pkgrel}_amd64.deb"
-        "archlinux.patch")
+        "archlinux.patch" "vstax2024")
 sha256sums=('bcd024715cd4180b8f578f114c544e1e988a3148aa2e9529a4889ccf62d4ef6c'
-            '24f5eaf62370836a75185c3e75b1402f4e9fea216dbc1541eeb6a57237eabcb1')
+            'e27b65e54bd0e8be3bcaf09bfee76eb167de0640abd2d77713d87b5bb01907bc'
+            '37ae2f14b4e7044c4264b0b8a1228562a9dea8c44c70a762747cc43ed43968ed')
 
 
 prepare() {
@@ -50,9 +51,8 @@ package() {
     install -d "${pkgdir}/usr/share/java/"
     cp -R "${_appname}" "${pkgdir}/usr/share/java/${_appname}"
 
-    # Move executable to /usr/bin
-    install -d "${pkgdir}/usr/bin/"
-    mv "${pkgdir}/usr/share/java/${_appname}/${_appname}.sh" "${pkgdir}/usr/bin/${_appname}"
+    # Install our custom launcher script
+    install -Dm755 "${srcdir}/vstax2024" "${pkgdir}/usr/bin/${_appname}"
 
     # Remove the included java environment
     rm -Rf "${pkgdir}/usr/share/java/${_appname}/jre"

@@ -1,0 +1,81 @@
+#!/bin/sh
+
+# Function to check Java version
+get_java_version() {
+    "$1" -version 2>&1 | awk -F '"' '/version/ {print $2}' | awk -F. '{print ($1 == "1") ? $2 : $1}'
+}
+
+# Find Java executable with fallbacks
+if [ -n "$JAVA_HOME" ] && [ -x "$JAVA_HOME/bin/java" ]; then
+    JAVA="$JAVA_HOME/bin/java"
+elif command -v java >/dev/null 2>&1; then
+    JAVA=$(command -v java)
+elif [ -x "/usr/lib/jvm/java-21-openjdk/bin/java" ]; then
+    JAVA="/usr/lib/jvm/java-21-openjdk/bin/java"
+elif [ -x "/usr/lib/jvm/java-17-openjdk/bin/java" ]; then
+    JAVA="/usr/lib/jvm/java-17-openjdk/bin/java"
+elif [ -x "/usr/lib/jvm/java-8-openjdk/bin/java" ]; then
+    JAVA="/usr/lib/jvm/java-8-openjdk/bin/java"
+else
+    echo "Error: Java not found!" >&2
+    exit 1
+fi
+
+# Get Java version
+JAVA_VERSION=$(get_java_version "$JAVA")
+
+echo "Using Java version: $JAVA_VERSION from $JAVA" >&2
+
+# Change to application directory
+APP_DIR="/usr/share/java/vstax2024"
+if ! cd "$APP_DIR"; then
+    echo "Error: Application directory not found!" >&2
+    exit 1
+fi
+
+# Common JVM arguments
+JVM_ARGS="-Xmx800m -Xms800m"
+COMMON_PROPS="-Dawt.useSystemAAFontSettings=on \
+    -Dswing.aatext=true \
+    -Djava.awt.headless=false \
+    -Dapple.awt.UIElement=false \
+    -Djava.awt.toolkit=sun.awt.X11.XToolkit \
+    -Dawt.toolkit=sun.awt.X11.XToolkit \
+    -Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel"
+
+# Java 9+ specific arguments
+JAVA9_PLUS="--add-opens java.desktop/java.awt.peer=ALL-UNNAMED \
+    --add-opens java.desktop/sun.awt=ALL-UNNAMED \
+    --add-opens java.desktop/sun.swing=ALL-UNNAMED \
+    --add-opens java.desktop/javax.swing=ALL-UNNAMED \
+    --add-opens java.desktop/javax.swing.plaf.basic=ALL-UNNAMED \
+    --add-opens java.desktop/javax.swing.plaf.synth=ALL-UNNAMED \
+    --add-opens java.desktop/com.sun.java.swing.plaf.gtk=ALL-UNNAMED \
+    --add-opens java.desktop/sun.awt.shell=ALL-UNNAMED \
+    --add-opens java.desktop/sun.awt.X11=ALL-UNNAMED \
+    --add-opens java.base/java.lang=ALL-UNNAMED \
+    --add-opens java.base/java.util=ALL-UNNAMED \
+    --add-opens java.base/java.io=ALL-UNNAMED \
+    --add-opens java.base/java.net=ALL-UNNAMED \
+    --add-opens java.base/java.security=ALL-UNNAMED \
+    --add-opens java.base/java.text=ALL-UNNAMED \
+    --add-opens java.base/sun.net.www.protocol.file=ALL-UNNAMED \
+    --add-opens java.xml/com.sun.org.apache.xerces.internal.jaxp.datatype=ALL-UNNAMED \
+    --add-opens java.desktop/java.awt=ALL-UNNAMED \
+    --add-exports java.desktop/sun.awt=ALL-UNNAMED \
+    --add-exports java.desktop/sun.awt.X11=ALL-UNNAMED"
+
+# Java 8 specific arguments
+JAVA8_PROPS="-Dsun.locale.formatasdefault=true"
+
+# Set locale providers based on Java version
+if [ "$JAVA_VERSION" -ge 9 ]; then
+    LOCALE_PROPS="-Djava.locale.providers=COMPAT,CLDR"
+    FINAL_ARGS="$JVM_ARGS $COMMON_PROPS $LOCALE_PROPS $JAVA9_PLUS"
+else
+    LOCALE_PROPS="-Djava.locale.providers=COMPAT"
+    FINAL_ARGS="$JVM_ARGS $COMMON_PROPS $LOCALE_PROPS $JAVA8_PROPS"
+fi
+
+# Execute the application
+exec "$JAVA" $FINAL_ARGS -jar jfw-launcher-8.0.1-obf.jar "$@"
