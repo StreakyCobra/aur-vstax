@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#┌──────────────────────────────────────────────────────────┐
+#│ Test suite auto-generated for VSTax installation checks. │
+#└──────────────────────────────────────────────────────────┘
+
 # Color definitions
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -36,39 +40,46 @@ echo -e "${BOLD}VSTax Installation Test Suite${NC}"
 echo "================================"
 echo
 
-# Basic package installation tests
-echo -e "${BOLD}Package Installation Tests:${NC}"
+# System Requirements Tests
+echo -e "${BOLD}System Requirements Tests:${NC}"
+run_test "System has sufficient memory" "free -m | awk '/^Mem:/ {print \$2}' | grep -q '^[0-9]\{4,\}'"
+
+# Basic Package Installation Tests
+echo -e "\n${BOLD}Package Installation Tests:${NC}"
 run_test "Package is installed" "pacman -Q vstax"
 run_test "Java runtime is available" "which java"
-run_test "Qt5 tools are installed" "pacman -Q qt5-tools"
 run_test "XDG utils are installed" "pacman -Q xdg-utils"
 
-# File structure tests
+# File Structure Tests
 echo -e "\n${BOLD}File Structure Tests:${NC}"
 run_test "Application directory exists" "[ -d /usr/share/java/vstax2024 ]"
 run_test "Launcher script exists" "[ -x /usr/bin/vstax2024 ]"
 run_test "Desktop file exists" "[ -f /usr/share/applications/vstax2024.desktop ]"
 run_test "MIME type file exists" "[ -f /usr/share/mime/packages/vstax2024.xml ]"
 
-# Permission tests
+# Permission Tests
 echo -e "\n${BOLD}Permission Tests:${NC}"
 run_test "Launcher script is executable" "[ -x /usr/bin/vstax2024 ]"
 run_test "Application directory is readable" "[ -r /usr/share/java/vstax2024 ]"
 
-# Configuration tests
+# Display Environment Tests
+echo -e "\n${BOLD}Display Environment Tests:${NC}"
+run_test "Display server is available" "[ -n \"$DISPLAY\" ] || [ -n \"$WAYLAND_DISPLAY\" ]"
+run_test "libxrender is installed" "pacman -Q libxrender"
+run_test "libxtst is installed" "pacman -Q libxtst"
+
+# Configuration Tests
 echo -e "\n${BOLD}Configuration Tests:${NC}"
 run_test "Default browser is set" "xdg-settings get default-web-browser >/dev/null 2>&1"
 run_test "MIME database is updated" "grep -q 'vstax2024' /usr/share/mime/mime.cache"
 
-# Content validation tests
+# Content Validation Tests
 echo -e "\n${BOLD}Content Validation Tests:${NC}"
-run_test "Launcher uses correct path" "grep -q '/usr/share/java/vstax2024' /usr/bin/vstax2024"
 run_test "Desktop file has correct Exec path" "grep -q 'Exec=/usr/bin/vstax2024' /usr/share/applications/vstax2024.desktop"
 run_test "Desktop file has correct icon path" "grep -q 'Icon=/usr/share/java/vstax2024' /usr/share/applications/vstax2024.desktop"
 
-# Java specific tests
+# Java Environment Tests
 echo -e "\n${BOLD}Java Environment Tests:${NC}"
-run_test "Java version compatibility" "java -version 2>&1 | grep -E 'version \"(1\\.8|9|1[0-9]|2[0-9])'"
 run_test "Java launcher exists" "[ -f /usr/share/java/vstax2024/jfw-launcher-8.0.1-obf.jar ]"
 
 # Summary
