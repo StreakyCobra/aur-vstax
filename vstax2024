@@ -36,10 +36,14 @@ JVM_ARGS="-Xmx800m -Xms800m"
 COMMON_PROPS="-Dawt.useSystemAAFontSettings=on \
     -Dswing.aatext=true \
     -Djava.awt.headless=false \
-    -Dapple.awt.UIElement=false"
+    -Dapple.awt.UIElement=false \
+    -Djava.awt.toolkit=sun.awt.X11.XToolkit \
+    -Dawt.toolkit=sun.awt.X11.XToolkit \
+    -Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel"
 
 # Java 9+ specific arguments
-JAVA9_PLUS="--add-opens java.desktop/sun.awt=ALL-UNNAMED \
+JAVA9_PLUS="--add-opens java.desktop/java.awt.peer=ALL-UNNAMED \
+    --add-opens java.desktop/sun.awt=ALL-UNNAMED \
     --add-opens java.desktop/sun.swing=ALL-UNNAMED \
     --add-opens java.desktop/javax.swing=ALL-UNNAMED \
     --add-opens java.desktop/javax.swing.plaf.basic=ALL-UNNAMED \
@@ -54,7 +58,10 @@ JAVA9_PLUS="--add-opens java.desktop/sun.awt=ALL-UNNAMED \
     --add-opens java.base/java.security=ALL-UNNAMED \
     --add-opens java.base/java.text=ALL-UNNAMED \
     --add-opens java.base/sun.net.www.protocol.file=ALL-UNNAMED \
-    --add-opens java.xml/com.sun.org.apache.xerces.internal.jaxp.datatype=ALL-UNNAMED"
+    --add-opens java.xml/com.sun.org.apache.xerces.internal.jaxp.datatype=ALL-UNNAMED \
+    --add-opens java.desktop/java.awt=ALL-UNNAMED \
+    --add-exports java.desktop/sun.awt=ALL-UNNAMED \
+    --add-exports java.desktop/sun.awt.X11=ALL-UNNAMED"
 
 # Java 8 specific arguments
 JAVA8_PROPS="-Dsun.locale.formatasdefault=true"
