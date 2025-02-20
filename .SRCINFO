@@ -13,8 +13,11 @@ pkgbase = vstax
 	depends = libxrender
 	depends = libxtst
 	depends = fontconfig
+	depends = xdg-utils
+	depends = qt5-tools
 	source = https://sftp.vs.ch/vstax/2024/vstax2024_1.0.0-113_amd64.deb
 	source = archlinux.patch
+	source = vstax2024
 	sha256sums = bcd024715cd4180b8f578f114c544e1e988a3148aa2e9529a4889ccf62d4ef6c
 	sha256sums = 24f5eaf62370836a75185c3e75b1402f4e9fea216dbc1541eeb6a57237eabcb1
 
