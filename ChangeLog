@@ -1,3 +1,9 @@
+2026-02-12 Fabien Dubosson <fabien.dubosson@gmail.com>:
+
+	* 2025_1.0.0-136:
+	New upstream release
+	Fix gray window issue on Wayland by setting _JAVA_AWT_WM_NONREPARENTING=1 in the desktop launcher
+
 2025-06-30 Fabien Dubosson <fabien.dubosson@gmail.com>:
 
 	* 2024_1.0.6-122:
